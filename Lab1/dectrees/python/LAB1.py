@@ -161,7 +161,7 @@ def partition(data, fraction):
 
 def main():
     print("STARTING...")
-    PRINT_TREE_AT_LEVEL_2() # UNCOMMENT FOR TREE AT LEVEL 2.
+    # PRINT_TREE_AT_LEVEL_2() # UNCOMMENT FOR TREE AT LEVEL 2.
     ASSIGNMENT_1()
     ASSIGNMENT_3()
     ASSIGNMENT_5()
