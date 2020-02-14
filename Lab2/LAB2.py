@@ -49,7 +49,7 @@ def RBF(x,y):
     control the smoothness of the boundary.
     '''
     sigma = 2
-    return math.exp( -(np.linalg.norm(x, y)**2) / (2*sigma**2) )
+    return math.exp( - (np.linalg.norm(x-y)**2) / (2*sigma**2) )
 
 
 KERNEL = RBF
