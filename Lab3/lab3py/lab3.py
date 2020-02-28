@@ -124,12 +124,11 @@ def classifyBayes(X, prior, mu, sigma):
     for k in range(Nclasses):
         
         det_sigma = np.linalg.det(sigma[k])
-        term_1 = -0.5*math.log(det_sigma)
-        
         sigma_diag = np.diag(np.linalg.inv(sigma[k]))
         X_mu = X - mu[k]
-        term_2 = -0.5*np.sum(np.power(X_mu,2)*sigma_diag, axis=1)
 
+        term_1 = -0.5*math.log(det_sigma)
+        term_2 = -0.5*np.sum(np.power(X_mu,2)*sigma_diag, axis=1)
         term_3 = math.log(prior[k])
 
         logProb[k, :] = term_1 + term_2 + term_3

@@ -1,0 +1,109 @@
+// TEMPLATE
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: 
+KERNEL = 
+C = 
+
+
+
+
+
+
+
+
+// TASK: 1
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: Works porly, have missclasification on red, but always correctly for blue. 
+KERNEL = linearKearnel
+C = 2
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.8 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.8 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.8 + [0.0, -0.5]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: Fails with classify. Due to laying next to eachother. ON-line case
+KERNEL = linearKearnel
+C = 6
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.2 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.2 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.2 + [0.0, 0.5]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: Works well. 
+KERNEL = linearKearnel
+C = 9
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.2 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.2 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.2 + [0.0, -0.5]
+
+
+
+
+
+
+// TASK: 2
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: Classifies well! ON-line case
+KERNEL = RBF
+C = None
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.2 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.2 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.2 + [0.0, 0.5]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: Classifies well! ON-line case
+KERNEL = polynomialKernel
+C = None
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.2 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.2 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.2 + [0.0, 0.5]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: 
+KERNEL = RBF
+C = None
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.8 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.8 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.8 + [0.0, -0.5]
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: 
+KERNEL = polynomialKernel
+C = None
+
+classA = np.concatenate(
+    (np.random.randn(10, 2) * 0.8 + [1.5, 0.5],
+    np.random.randn(10, 2) * 0.8 + [-1.5, 0.5]))
+classB = np.random.randn(20, 2) * 0.8 + [0.0, -0.5]
+
+
+
+
+
+
+
+
+// TASK: 3
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+Comment: 
+KERNEL = 
+C = 
+
+
+
+
+
+
