@@ -46,7 +46,8 @@ def computePrior(labels, W=None):
     # TODO: compute the values of prior for each class!
     # ==========================
     for k in range(Nclasses):
-        prior[k] = len(np.where(labels == k))/Npts
+        prior[k] = len(np.where(labels == k))/np.sum(W[np.where(labels == k)])
+    prior = prior/np.sum(prior)
     # ==========================
 
     return prior
@@ -72,6 +73,8 @@ def mlParams(X, labels, W=None):
     # ==========================
     for k in range(Nclasses):
         w_k = np.sum(W[np.where(labels==k)])
+        #print(W[np.where(labels==k)].shape)
+        #print(X[np.where(labels==k)].shape)
         mu[k, :] = np.sum(W[np.where(labels==k)] * X[np.where(labels==k)], axis=0)/w_k 
         for m in range(Ndims):
             sigma[k, m, m] =  np.sum(W[np.where(labels==k)].reshape(1,-1) * np.power((X[np.where(labels==k), m] - mu[k,m]), 2), axis=1)/w_k
@@ -185,15 +188,15 @@ plotGaussian(X,labels,mu,sigma)
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-testClassifier(BayesClassifier(), dataset='iris', split=0.7)
+# testClassifier(BayesClassifier(), dataset='iris', split=0.7)
 
 
 
-testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
+# testClassifier(BayesClassifier(), dataset='vowel', split=0.7)
 
 
 
-plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
+# plotBoundary(BayesClassifier(), dataset='iris',split=0.7)
 
 
 # ## Boosting functions to implement
@@ -216,7 +219,6 @@ def trainBoost(base_classifier, X, labels, T=10):
 
     # The weights for the first iteration
     wCur = np.ones((Npts,1))/float(Npts)
-
     for i_iter in range(0, T):
         # a new classifier can be trained like this, given the current weights
         classifiers.append(base_classifier.trainClassifier(X, labels, wCur))
@@ -226,8 +228,12 @@ def trainBoost(base_classifier, X, labels, T=10):
 
         # TODO: Fill in the rest, construct the alphas etc.
         # ==========================
-        
-        # alphas.append(alpha) # you will need to append the new alpha
+
+        error = np.sum(wCur[np.where(vote == labels, 1, 0)], axis = 1)
+        alpha = 0.5*(np.log(1-error) - np.log(error))
+        wCur = wCur/np.sum(wCur) * np.where(vote == labels, np.exp(-alpha), np.exp(alpha))
+        alphas.append(alpha) # you will need to append the new alpha
+    
         # ==========================
         
     return classifiers, alphas
@@ -240,16 +246,19 @@ def trainBoost(base_classifier, X, labels, T=10):
 def classifyBoost(X, classifiers, alphas, Nclasses):
     Npts = X.shape[0]
     Ncomps = len(classifiers)
-
+    
     # if we only have one classifier, we may just classify directly
     if Ncomps == 1:
         return classifiers[0].classify(X)
     else:
         votes = np.zeros((Npts,Nclasses))
 
+
         # TODO: implement classificiation when we have trained several classifiers!
         # here we can do it by filling in the votes vector with weighted votes
         # ==========================
+        for k in range(Nclasses):
+            votes[:,k] = np.dot(alpha*np.where(classifiers.classify(X) == k))
         
         # ==========================
 
@@ -283,7 +292,7 @@ class BoostClassifier(object):
 # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
-#testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
+testClassifier(BoostClassifier(BayesClassifier(), T=10), dataset='iris',split=0.7)
 
 
 
@@ -291,7 +300,7 @@ class BoostClassifier(object):
 
 
 
-#plotBoundary(BoostClassifier(BayesClassifier()), dataset='iris',split=0.7)
+plotBoundary(BoostClassifier(BayesClassifier()), dataset='iris',split=0.7)
 
 
 # Now repeat the steps with a decision tree classifier.
