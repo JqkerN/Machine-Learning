@@ -135,19 +135,6 @@ def classifyBayes(X, prior, mu, sigma):
         term_3 = math.log(prior[k])
 
         logProb[k, :] = term_1 + term_2 + term_3
-    # for k in range(Nclasses):
-    #     for idx in range(Npts):
-    #         det_sigma = np.linalg.det(sigma[k,:,:])
-    #         term_1 = -0.5*math.log(det_sigma)
-
-    #         X_mu = X[idx] - mu[k]
-    #         sigma_inv = np.linalg.inv(sigma[k])
-    #         term_2 = -0.5*np.matmul(np.matmul(X_mu,sigma_inv), np.transpose(X_mu))
-
-    #         term_3 = math.log(prior[k])
-
-    #         logProb[k, idx] = term_1 + term_2 + term_3
-    
     # ==========================
     
     # one possible way of finding max a-posteriori once
@@ -185,7 +172,7 @@ class BayesClassifier(object):
 # plotGaussian(X,labels,mu,sigma)
 
 
-# Call the `testClassifier` and `plotBoundary` functions for this part.
+# # Call the `testClassifier` and `plotBoundary` functions for this part.
 
 
 # testClassifier(BayesClassifier(), dataset='iris', split=0.7)
@@ -311,11 +298,11 @@ class BoostClassifier(object):
 # Now repeat the steps with a decision tree classifier.
 
 
-testClassifier(DecisionTreeClassifier(), dataset='iris', split=0.7)
+# testClassifier(DecisionTreeClassifier(), dataset='iris', split=0.7)
 
 
 
-testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
+# testClassifier(BoostClassifier(DecisionTreeClassifier(), T=10), dataset='iris',split=0.7)
 
 
 
